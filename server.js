@@ -10,7 +10,7 @@ const crm = new AmoCRM({
   domain: "abdukarimmirzayev.amocrm.ru",
   auth: {
     login: "diyor.amirzayev@gmail.com",
-    hash: "HUI4uirC0R5KVqGcMtTHnCvNfsyGnHAQyoxWBeseoL3OBY1ZLbhGuTvmVRdYkmbv", // API-ключ доступа
+    hash: "AaDqkjYIRAhgX3zuTfz8tCT3aOOuxW2YhRlxxFOTbKwvNudLf7nJk5YyyoAGdYJ5", // API-ключ доступа
   },
 });
 
@@ -37,10 +37,20 @@ app.post("/send", (req, res) => {
   var name = req.body.name;
   var tel = req.body.tel;
 
+  const lead = new crm.Lead();
+  lead.name = name;
+  lead.tel = tel;
+  console.log(lead);
+
+  lead.save();
+
+  console.log(lead);
+
   crm.request
     .post("/api/v4/leads/unsorted/forms", {
       request_id: Date.now(),
       source_name: "node.js heroku",
+      source_uid: "ede127c9-9da1-4e71-aeb1-a5c7ae925603",
       _embedded: {
         leads: [
           {
@@ -99,7 +109,8 @@ app.post("/send", (req, res) => {
       },
     })
     .then((data) => {
-      res.status(200).send("Полученные данные");
+      console.log(data);
+      res.status(200).send(data);
     })
     .catch((e) => {
       res.status(401).send("Произошла ошибка создания контакта");
