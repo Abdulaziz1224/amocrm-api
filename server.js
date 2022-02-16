@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const AmoCRM = require("amocrm-js");
 const uuid = require("uuid");
-
+require("dotenv").config();
 const form_id = uuid.v4();
 
 const crm = new AmoCRM({
@@ -102,6 +102,6 @@ app.post("/send", (req, res) => {
     });
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("app running on port 3000");
 });
