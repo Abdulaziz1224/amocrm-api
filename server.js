@@ -29,6 +29,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get("/", (req, res) => {
+  res.send("I am working");
+});
+
 app.post("/send", (req, res) => {
   var name = req.body.name;
   var tel = req.body.tel;
